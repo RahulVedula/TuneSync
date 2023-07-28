@@ -1,0 +1,126 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} {{playlist.name}} {% endblock title %} 
+
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title"> {{playlist.name}} </h3>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">{{ user.get_username}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{playlist.name}}</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <!-- Playlist Image -->
+                      <img src="{{ playlist.image_url }}" alt="Playlist Image" style="width: 250px; height: 250px; border-radius: 0;">
+                    </div>
+                    <div class="col-md-8">
+                        <!-- Big Text -->
+                        <div style="padding-top: 60px;">
+                          <h2 style="font-size: 36px;">{{playlist.name}}</h2>
+                          <hr>
+                          <p style="font-size: 16px;">By: {{ user.get_username}} — {{ playlist.songs.all|length }} songs </p>
+                        </div>
+                      </div>
+                  </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Add Song Button -->
+                                <a href="{% url 'search' playlist.name %}" class="btn btn-success btn-sm" style="margin-right: 5px;">
+                                    + Add Song
+                                </a>
+                                <a href="{{playlist.youtubeLink}}" target="_blank" style="margin-right: 5px;">
+                                  <img src="/static/assets/images/youtube_logo.webp" alt="YouTube Logo" style="width: 50px; height: 50px;">
+                              </a>
+                              <a href="{{playlist.spotifyLink}}" target="_blank">
+                                  <img src="/static/assets/images/spotify_logo.webp" alt="Spotify Logo" style="width: 45px; height: 45px;">
+                              </a>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Search Bar -->
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-sm btn-primary" type="button">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+      <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive"> <!-- Add the table-responsive class here -->
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th>Song</th>
+                        <th>Album</th>
+                        <th>Date Added</th>
+                        <th>Duration</th>
+                        <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for song in playlist.songs.all %}
+                        <tr>
+                            <td>
+                                <img src="{{ song.image_url }}" alt="Song Image" style="width: 45px; height: 45px; border-radius: 0;">
+                            </td>
+                            <td>
+                                {{ song.title }}
+                                <br>
+                                <small>{{ song.writer }}</small>
+                            </td>
+                            <td>{{ song.album_name }}</td>
+                            <td>{{ song.added_date }}</td>
+                            <td>{{ song.get_duration_display }}</td>
+                            <td>
+                                <form action="{% url 'delete_song' playlist.name song.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,86 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Import Youtube Playlist  {% endblock %}
+
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="/static/assets/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="/static/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+{% endblock plugin_stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h3 class="page-title"> Import Youtube Playlist </h3>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Import Youtube Playlist</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Playlist</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Import Youtube Playlist</h4>
+            <p class="card-description"> Please Input the Following Information To Import Your Youtube Playlist </p>
+            <form class="forms-sample" action="/youtube_playlist/" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="{{ form.playlistName.id_for_label }}">Playlist Name</label>
+                <input type="text" class="form-control" id="{{ form.playlistName.id_for_label }}" name="{{ form.playlistName.html_name }}" value="{{ form.playlistName.value }}">
+              </div>
+              <div class="form-group">
+                <label for="{{ form.creator.id_for_label }}">Creator Name</label>
+                <input type="text" class="form-control" id="{{ form.creator.id_for_label }}" name="{{ form.creator.html_name }}" value="{{ form.creator.value }}">
+              </div>
+              <div class="form-group">
+                <label for="{{ form.youtubeLink.id_for_label }}">Youtube Playlist Link</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="{{ form.youtubeLink.id_for_label }}" name="{{ form.youtubeLink.html_name }}" value="{{ form.youtubeLink.value }}">
+                  <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button" data-toggle="tooltip" data-placement="top" title="Copy the Youtube playlist link by copying the web address of the playlist. Due to API limits, there is a playlist limit of 100">
+                      <span style="font-size: 1rem; font-weight: bold; color: #666;">i</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary mr-2">Submit</button>
+              <button type="button" class="btn btn-dark" onclick="redirectToHome()">Cancel</button>
+            </form>
+            
+            <script>
+              function redirectToHome() {
+                window.location.href = "{% url 'playlists' %}";
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}
+  <script src="/static/assets/vendors/select2/select2.min.js"></script>
+  <script src="/static/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+  <script src="/static/assets/js/file-upload.js"></script>
+  <script src="/static/assets/js/typeahead.js"></script>
+  <script src="/static/assets/js/select2.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
+{% endblock javascripts %}

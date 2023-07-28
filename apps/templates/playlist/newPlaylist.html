@@ -1,0 +1,79 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Import Spotify Playlist {% endblock %}
+
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="/static/assets/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="/static/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+{% endblock plugin_stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h3 class="page-title"> Import Spotify Playlist </h3>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Import Spotify Playlist</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Playlist</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Import Spotify Playlist</h4>
+            <p class="card-description"> Please Input the Following Information To Import Your Spotify Playlist </p>
+            <form class="forms-sample">
+              <div class="form-group">
+                <label for="exampleInputUsername1">Username</label>
+                <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Playlist Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Playlist URI</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button" data-toggle="tooltip" data-placement="top" title="You can copy the Spotify URI by right-clicking an it, hover over Share, hold Alt (on Mac) or Ctrl (on Windows), click on: 'Copy Spotify URI'">
+                      <img src="/static/assets/images/circle-info-solid.svg" alt="Info Circle">
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary mr-2">Submit</button>
+              <button class="btn btn-dark">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}
+  <script src="/static/assets/vendors/select2/select2.min.js"></script>
+  <script src="/static/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+  <script src="/static/assets/js/file-upload.js"></script>
+  <script src="/static/assets/js/typeahead.js"></script>
+  <script src="/static/assets/js/select2.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
+{% endblock javascripts %}

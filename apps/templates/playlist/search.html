@@ -1,0 +1,110 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %} Add New Songs {% endblock %}
+
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="/static/assets/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="/static/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+
+  <!-- End plugin css for this page -->
+{% endblock plugin_stylesheets %}
+<link rel="stylesheet" href="/static/assets/css/playlist.css">
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <!-- Search Bar -->
+                            <form method="post" action="{% url 'search' playlist.name %}" id="search-form">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <input type="text" name="search_query" class="form-control search-bar" placeholder="Search...">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-sm btn-primary search-button" type="submit">Add Song</button>
+                                    </div>
+                                </div>
+                                <!-- Autocomplete dropdown -->
+                                <div class="autocomplete-items">
+                                    <!-- Dropdown results will be inserted here dynamically -->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}
+  <script src="/static/assets/vendors/select2/select2.min.js"></script>
+  <script src="/static/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+  <script src="/static/assets/js/file-upload.js"></script>
+  <script src="/static/assets/js/typeahead.js"></script>
+  <script src="/static/assets/js/select2.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+      
+      const searchInput = document.querySelector(".search-bar");
+      const dropdownContainer = document.querySelector(".autocomplete-items");
+      let typingTimer;
+      const doneTypingInterval = 1000; // 1 second
+  
+      searchInput.addEventListener("keyup", function() {
+        clearTimeout(typingTimer);
+        if (searchInput.value) {
+          typingTimer = setTimeout(fetchSearchResults, doneTypingInterval);
+        } else {
+          dropdownContainer.innerHTML = ""; // Clear the dropdown container when search input is empty
+        }
+      });
+
+      function fetchSearchResults() {
+        const searchQuery = searchInput.value;
+        // Use Django's URL template tag to generate the AJAX URL dynamically
+        const ajaxURL = "{% url 'get_related_searches' %}?q=" + searchQuery + "&timestamp=" + new Date().getTime();
+        
+        // Make the AJAX call to fetch related search results
+        fetch(ajaxURL)
+          .then(response => response.text()) // Get the HTML response instead of JSON
+          .then(data => {
+            dropdownContainer.innerHTML = data;
+            // Add event listener to each table row for auto-completion
+            const tableRows = document.querySelectorAll('.autocomplete-item');
+            tableRows.forEach(row => {
+              row.addEventListener('click', function() {
+                const songTitle = row.getAttribute('data-song-title');
+                searchInput.value = songTitle;
+                dropdownContainer.innerHTML = ""; // Clear the dropdown after auto-completion
+              });
+            });
+          });
+      }
+
+      // Add form submission handling
+      const searchForm = document.querySelector("#search-form");
+      searchForm.addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        // Submit the form via standard HTML form submission
+        searchForm.submit();
+      });
+    });
+  </script>
+{% endblock javascripts %}
