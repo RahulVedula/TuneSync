@@ -1,0 +1,62 @@
+/* Playlist Card */
+.playlist-card {
+  position: relative;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out; /* Added transition for smooth hover effect */
+  }
+.playlist-card::before {
+content: '';
+background-image: url('/static/assets/images/playlist_cover.jpg');
+background-size: cover;
+height: 100%;
+width: 100%;
+position: absolute;
+filter: blur(30px);
+z-index: -1;
+}
+.playlist-card .card-body {
+padding: 1.75rem 1.5625rem;
+}
+.playlist-card .card-body + .card-body {
+padding-top: 1rem;
+}
+.playlist-card .card-title {
+color: #ffffff;
+margin-bottom: 1.125rem;
+text-transform: capitalize;
+}
+.playlist-card .card-subtitle {
+font-weight: normal;
+margin-top: 0.625rem;
+margin-bottom: 0.625rem;
+}
+.playlist-card .card-description {
+color: #bfbfbf;
+font-weight: 300;
+}
+/* Custom border colors for playlist cards */
+.playlist-card.card-outline-success {
+border: 1px solid #00d25b;
+}
+.playlist-card.card-outline-primary {
+border: 1px solid #0090e7;
+}
+.playlist-card.card-outline-warning {
+border: 1px solid #ffab00;
+}
+.playlist-card.card-outline-danger {
+border: 1px solid #fc424a;
+}
+.playlist-card.card-rounded {
+border-radius: 5px;
+}
+.playlist-card.card-faded {
+background: #b5b0b2;
+border-color: #b5b0b2;
+}
+/* Hover effect */
+.playlist-card:hover {
+transform: scale(1.15); /* Slightly larger on hover */
+}
+
