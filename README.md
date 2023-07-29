@@ -1,5 +1,5 @@
 # TuneSync
-TuneSync is a media platform enabling cross-platform connections for playlists. Simply open the site, login, and enjoy free, unlimited sharing or discovery for any type of playlists(Youtube, Spotify, or make your own)
+TuneSync is a media platform enabling cross-platform connections for playlists. TuneSync uses a combination of Django, REST Frameworks, and React.js paired with Youtube v3 and Spotify API to provide a user-friendly interface -- simply open the site, login, and enjoy free, unlimited sharing or discovery for any type of playlists(Youtube, Spotify, or make your own). 
 
 Users can choose one of three options when making new playlists, this option will use import existing spotify playlists and make a new youtube playlist, linking the two playlists for future sharing or editing:
 ![Screen Shot 2023-07-29 at 1 08 25 AM](https://github.com/RahulVedula/TuneSync/assets/107275556/3cce5e8e-182f-42fa-afe1-35dd4c63a31d)
