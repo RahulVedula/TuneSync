@@ -23,6 +23,5 @@ To see other features like Youtube Imports, customized playlists, or recommended
  - sys
  - pathlib
  - beautifulsoup4
- - django
  - pyquery
-Please ensure all are stored in a virtual environment with the correct app names/directories and collected static files
+ - django (Please ensure all are stored in a virtual environment with the correct app names/directories and collected static files)
